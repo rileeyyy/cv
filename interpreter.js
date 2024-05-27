@@ -1,4 +1,3 @@
-
 class CVInterpreter {
     constructor() {
         this.variables = {};
