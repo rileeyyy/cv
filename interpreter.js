@@ -29,21 +29,18 @@ class CVInterpreter {
         return null;
     }
 
-    evaluateCondition(condition) {
-        if (condition.includes(" is ")) {
-            let [varName, value] = condition.split(" is ");
-            varName = varName.trim();
-            value = value.trim().slice(1, -1);
-            if (this.variables.hasOwnProperty(varName)) {
-                if (typeof this.variables[varName] === 'number') {
-                    return this.variables[varName] === parseInt(value);
-                } else if (typeof this.variables[varName] === 'string') {
-                    return this.variables[varName] === value;
-                }
-            }
+evaluateCondition(condition) {
+    if (condition.includes(" is ")) {
+        let [varName, value] = condition.split(" is ");
+        varName = varName.trim();
+        value = parseInt(value.trim());
+        if (this.variables.hasOwnProperty(varName) && typeof this.variables[varName] === 'number') {
+            return this.variables[varName] === value;
         }
-        return false;
     }
+    return false;
+}
+
 
     run(code) {
         const lines = code.split("\n");
