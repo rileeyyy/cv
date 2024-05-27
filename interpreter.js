@@ -25,11 +25,6 @@ class CVInterpreter {
                 let message = match[1];
                 return ["print", message];
             }
-            match = line.match(/can you say ([a-zA-Z_]\w*)\?/);
-            if (match) {
-                let varName = match[1];
-                return ["print_var", varName];
-            }
         }
         return null;
     }
@@ -51,7 +46,7 @@ class CVInterpreter {
     }
 
     run(code) {
-        let lines = code.split('\n');
+        const lines = code.split("\n");
         let i = 0;
         while (i < lines.length) {
             let line = lines[i];
@@ -60,7 +55,8 @@ class CVInterpreter {
                 let [cmd, arg] = parsedLine;
                 if (cmd === "if") {
                     this.ifExec = false;
-                    if (this.evaluateCondition(arg)) {
+                    let condition = arg;
+                    if (this.evaluateCondition(condition)) {
                         this.ifExec = true;
                         i++;
                         while (i < lines.length && lines[i].trim() !== "thats all") {
@@ -99,10 +95,6 @@ class CVInterpreter {
                     }
                 } else if (cmd === "print") {
                     console.log(arg);
-                } else if (cmd === "print_var") {
-                    if (this.variables.hasOwnProperty(arg)) {
-                        console.log(this.variables[arg]);
-                    }
                 }
             }
             i++;
@@ -115,28 +107,14 @@ class CVInterpreter {
             let [cmd, arg] = parsedLine;
             if (cmd === "print") {
                 console.log(arg);
-            } else if (cmd === "print_var") {
-                if (this.variables.hasOwnProperty(arg)) {
-                    console.log(this.variables[arg]);
-                }
             }
         }
     }
 }
 
-function runCVCode() {
-    let code = document.getElementById('codeEditor').value;
-    let outputElement = document.getElementById('output');
-    outputElement.innerHTML = '';
-    console.oldLog = console.log;
-    console.log = function(message) {
-        outputElement.innerHTML += message + '<br>';
-    };
-    
-    let interpreter = new CVInterpreter();
-    interpreter.run(code);
-    
-    console.log = console.oldLog;
-}
+const interpreter = new CVInterpreter();
 
-document.getElementById('runButton').addEventListener('click', runCVCode);
+document.getElementById("runButton").addEventListener("click", () => {
+    const code = document.getElementById("codeEditor").value;
+    interpreter.run(code);
+});
