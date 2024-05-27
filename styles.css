@@ -6,6 +6,18 @@
 	text-transform: lowercase;
 }
 
+pre {
+    background-color: #f5f5f5; 
+    border: 1px solid #ccc;    
+	
+    border-radius: 4px;        
+    padding: 10px;             
+    font-family: 'Courier New', Courier, monospace; 
+    font-size: 14px;           
+    white-space: pre-wrap;     
+    overflow: auto;            
+}
+
 body {
 	background-color: #f4f4f4;
 	color: #333;
